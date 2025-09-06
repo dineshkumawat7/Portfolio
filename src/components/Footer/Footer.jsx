@@ -1,5 +1,4 @@
-import Button from "../Button";
-import InputField from "../InputField";
+import FooterNewsletterForm from "./NewsletterForm";
 
 export default function Footer() {
     return (
@@ -13,23 +12,9 @@ export default function Footer() {
                         Subscribe to our newsletter for the marketing insights,
                         trends, & growth strategies to scale your business.
                     </p>
-                    <form action="" method="POST">
-                        <div className="items-center grid w-full grid-cols-2">
-                            <InputField
-                                type="email"
-                                name="email"
-                                value=""
-                                // onChange={handleChange}
-                                placeholder="Email"
-                                required
-                            />
-                            <Button
-                                text="Get Notified"
-                                backgroundColor="green"
-                                color="white"
-                            />
-                        </div>
-                    </form>
+                    <div>
+                        <FooterNewsletterForm />
+                    </div>
                 </div>
 
                 <div className=" grid md:grid-cols-2 gap-10">

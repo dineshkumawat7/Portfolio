@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import InputField from "./InputField";
+import { useToast } from "../../hooks/useToast";
+import InputField from "../InputField";
 
 export default function ContactForm() {
+
+    const toast = useToast();
+
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -34,10 +38,11 @@ export default function ContactForm() {
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
+            toast.error('Bad Request', { description: 'All fields are required.' })
             return;
         }
         // Handle form submission logic here
-        alert("Form submitted!");
+        toast.success('Saved', { description: 'Form submitted successfully.' })
         setForm({
             firstName: "",
             lastName: "",
@@ -48,7 +53,7 @@ export default function ContactForm() {
     };
 
     return (
-        <form className="max-w-xl mx-auto p-6 bg-transparent space-y-6" onSubmit={handleSubmit} noValidate>
+        <form className="max-w-xl mx-auto bg-transparent space-y-6" onSubmit={handleSubmit} noValidate>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <InputField
@@ -114,6 +119,16 @@ export default function ContactForm() {
             >
                 Send Message
             </button>
+            <div className="space-y-2">
+                <button className="px-4 py-2 bg-green-600 text-white rounded" onClick={() => toast.success('Saved', { description: 'Your changes have been saved.' })}>Success</button>
+                <button className="px-4 py-2 bg-red-600 text-white rounded" onClick={() => toast.error('Failed', { description: 'There was an error.', duration: 8000 })}>Error</button>
+                <button className="px-4 py-2 bg-blue-600 text-white rounded" onClick={() => toast.info('Heads up', { description: 'FYI — some info' })}>Info</button>
+                <button className="px-4 py-2 bg-yellow-400 text-black rounded" onClick={() => toast.warning('Warning', { description: 'Be careful!' })}>Warning</button>
+                <button className="px-4 py-2 bg-gray-800 text-white rounded" onClick={() => {
+                    const id = toast.custom(<div><div className="font-semibold">Custom content</div><div className="text-sm">Any JSX here</div></div>, { duration: 0, position: 'bottom-left' })
+                    setTimeout(() => toast.update(id, { description: 'Updated programmatically' }), 2000)
+                }}>Custom</button>
+            </div>
         </form>
     );
 }

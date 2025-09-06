@@ -1,34 +1,21 @@
 const InputField = ({
+    id,
     type = "text",
-    name,
+    placeholder = "",
     value,
     onChange,
-    placeholder = "",
-    required = false,
-    disabled = false,
-    error = "",
     className = "",
-    inputClassName = "",
-}) => {
-    return (
-        <div className={`flex px-4 py-2 flex-col w-full mb-4 ${className}`}>
-            <input
-                id={name}
-                name={name}
-                type={type}
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder}
-                required={required}
-                disabled={disabled}
-                className={`border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 
-          ${disabled ? "bg-gray-100 cursor-not-allowed" : "bg-white"} 
-          ${error ? "border-red-500" : "border-gray-300"}
-          ${inputClassName}`}
-            />
-            {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
-        </div>
-    );
-};
+    ...props
+}) => (
+    <input
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={`w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition ${className}`}
+        {...props}
+    />
+);
 
 export default InputField;
